@@ -10,6 +10,10 @@ on:
         options:
           - true
           - false
+      update_changelog:
+        required: true
+        default: true
+        type: boolean
   
 
 # Set environment variables that can be used across all jobs  
@@ -20,13 +24,23 @@ env:
 jobs:
   # Job 1: Code quality checks
   create_tag:
-    name: Create Tag
-    runs-on: ubuntu-latest
-    
+    if: inputs.create_tag == 'true'
+    name: create_tag
+    runs-on: ubuntu-latest  
     steps:
     - name: Dummy
       shell: bash
       run: |
-        echo "Hello, world!"
-      
+        echo "Create Tag"
+
+  add_changelog:
+    if: inputs.create_tag == 'true'
+    name: add_changelog
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dummy
+      shell: bash
+      run: |
+        echo "Add Changelog"
+
     
