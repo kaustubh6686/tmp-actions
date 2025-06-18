@@ -2,14 +2,14 @@ name: Sample Workflow
 
 on:
   workflow_dispatch:
-  inputs:
-    create_tag:
-      required: true
-      default: 'false'
-      type: choice
-      options:
-        - true
-        - false
+    inputs:
+      create_tag:
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - true
+          - false
   
 
 # Set environment variables that can be used across all jobs  
