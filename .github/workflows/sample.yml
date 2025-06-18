@@ -34,7 +34,8 @@ jobs:
         echo "Create Tag"
 
   add_changelog:
-    if: inputs.create_tag == 'true'
+    if: inputs.update_changelog == true
+    needs: create_tag
     name: add_changelog
     runs-on: ubuntu-latest
     steps:
