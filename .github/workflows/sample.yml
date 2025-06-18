@@ -3,18 +3,35 @@ name: Sample Workflow
 on:
   workflow_dispatch:
     inputs:
-      create_tag:
-        required: true
-        default: 'true'
-        type: choice
-        options:
-          - true
-          - false
-      update_changelog:
+      back_merge:
         required: true
         default: true
         type: boolean
-  
+      create_tag:
+        required: true
+        default: true
+        type: boolean
+      add_changelog:
+        required: true
+        default: true
+        type: boolean
+      forward_merge_from_develop_to_staging:
+        required: true
+        default: true
+        type: boolean
+      next_release_jira_release_version:
+        required: true
+        default: true
+        type: boolean
+      next_release_app_version:
+        required: true
+        default: true
+        type: boolean
+      forward_merge_from_staging_to_production:
+        required: true
+        default: true
+        type: boolean
+        
 
 # Set environment variables that can be used across all jobs  
 env:
@@ -22,9 +39,20 @@ env:
   PYTHON_VERSION: '3.9'
 
 jobs:
-  # Job 1: Code quality checks
+
+  back_merge:
+    if: inputs.back_merge == true
+    name: back_merge
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dummy
+      shell: bash
+      run: |
+        echo "Back Merge"
+
   create_tag:
     if: inputs.create_tag == 'true'
+    needs: back_merge
     name: create_tag
     runs-on: ubuntu-latest  
     steps:
@@ -34,7 +62,7 @@ jobs:
         echo "Create Tag"
 
   add_changelog:
-    if: inputs.update_changelog == true
+    if: inputs.add_changelog == true
     needs: create_tag
     name: add_changelog
     runs-on: ubuntu-latest
@@ -44,4 +72,46 @@ jobs:
       run: |
         echo "Add Changelog"
 
-    
+  forward_merge_from_develop_to_staging:
+    if: inputs.forward_merge_from_develop_to_staging == true
+    needs: add_changelog
+    name: forward_merge_from_develop_to_staging
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dummy
+      shell: bash
+      run: |
+        echo "Forward Merge from Develop to Staging"
+
+  next_release_jira_release_version:
+    if: inputs.next_release_jira_release_version == true
+    needs: forward_merge_from_develop_to_staging
+    name: next_release_jira_release_version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dummy
+      shell: bash
+      run: |
+        echo "Next Release Jira Release Version"
+
+  next_release_app_version:
+    if: inputs.next_release_app_version == true
+    needs: next_release_jira_release_version
+    name: next_release_app_version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dummy
+      shell: bash
+      run: |
+        echo "Next Release App Version"
+      
+  forward_merge_from_staging_to_production:
+    if: inputs.forward_merge_from_staging_to_production == true
+    needs: next_release_app_version
+    name: forward_merge_from_staging_to_production
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dummy
+      shell: bash
+      run: |
+        echo "Forward Merge from Staging to Production"
