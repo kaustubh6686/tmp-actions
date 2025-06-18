@@ -51,7 +51,7 @@ jobs:
         echo "Back Merge"
 
   create_tag:
-    if: inputs.create_tag == 'true'
+    if: inputs.create_tag == true
     needs: back_merge
     name: create_tag
     runs-on: ubuntu-latest  
