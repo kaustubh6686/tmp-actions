@@ -1,0 +1,32 @@
+name: Sample Workflow
+
+on:
+  workflow_dispatch:
+  inputs:
+    create_tag:
+      required: true
+      default: 'false'
+      type: choice
+      options:
+        - true
+        - false
+  
+
+# Set environment variables that can be used across all jobs  
+env:
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.9'
+
+jobs:
+  # Job 1: Code quality checks
+  create_tag:
+    name: Create Tag
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Dummy
+      shell: bash
+      run: |
+        echo "Hello, world!"
+      
+    
