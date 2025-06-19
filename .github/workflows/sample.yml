@@ -114,6 +114,9 @@ on:
 env:
   NODE_VERSION: '18'
   PYTHON_VERSION: '3.9'
+  BRANCH_MASTER: ${{ inputs.branch_master }}
+  BRANCH_STAGING: ${{ inputs.branch_staging }}
+  BRANCH_PRODUCTION: ${{ inputs.branch_production }}
 
 jobs:
 
@@ -125,7 +128,7 @@ jobs:
     - name: Dummy
       shell: bash
       run: |
-        echo "Back Merge"
+        ./script.sh
 
   create_tag:
     if: inputs.create_tag == true && always() && (needs.back_merge.result == 'success' || inputs.back_merge == false)
