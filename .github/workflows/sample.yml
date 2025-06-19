@@ -125,7 +125,9 @@ jobs:
     name: back_merge
     runs-on: ubuntu-latest
     steps:
-    - name: Dummy
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Run Script
       shell: bash
       run: |
         ./script.sh
