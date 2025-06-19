@@ -1,40 +1,97 @@
-name: Sample Workflow
+name: 🚀 Release Pipeline - Complete Deployment Workflow
+
+# 📋 WORKFLOW OVERVIEW:
+# This automated pipeline handles end-to-end release management with the following stages:
+# 1. Repository sync (back-merge)  2. Version tagging  3. Documentation  
+# 4. Environment promotion  5. Project management  6. Production deployment
+#
+# ⚠️  IMPORTANT: Production deployment will affect live users!
+# 💡 TIP: You can skip individual steps by unchecking them below
 
 on:
   workflow_dispatch:
     inputs:
+      # ═══════════════════════════════════════════════════════════════
+      # 🔧 REPOSITORY MANAGEMENT
+      # ═══════════════════════════════════════════════════════════════
       back_merge:
-        description: 'Perform back merge operation from main to develop branch'
+        description: |
+          🔄 **Back Merge** (main → develop)
+          Synchronizes main branch changes back to develop branch.
+          ✅ Recommended for: hotfix releases, critical patches
+          ⏱️ Duration: ~2-3 minutes
         required: true
         default: true
         type: boolean
+      
+      # ═══════════════════════════════════════════════════════════════
+      # 🏷️ VERSION CONTROL & DOCUMENTATION
+      # ═══════════════════════════════════════════════════════════════
       create_tag:
-        description: 'Create a new release tag based on version'
+        description: |
+          🏷️ **Create Release Tag**
+          Generates semantic version tag (vX.X.X) and creates GitHub release.
+          ✅ Includes: release notes, binary artifacts, changelog
+          ⏱️ Duration: ~1-2 minutes
         required: true
         default: true
         type: boolean
+      
       add_changelog:
-        description: 'Generate and add changelog entries for the release'
+        description: |
+          📝 **Generate Changelog**
+          Auto-creates CHANGELOG.md with commit history and release notes.
+          ✅ Includes: features, bugfixes, breaking changes, contributors
+          ⏱️ Duration: ~1 minute
         required: true
         default: true
         type: boolean
+      
+      # ═══════════════════════════════════════════════════════════════
+      # 🌐 ENVIRONMENT PROMOTION
+      # ═══════════════════════════════════════════════════════════════
       forward_merge_from_develop_to_staging:
-        description: 'Merge changes from develop branch to staging branch'
+        description: |
+          ➡️ **Deploy to Staging** (develop → staging)
+          Promotes latest features to staging environment for QA testing.
+          ✅ Safe to run: staging environment, no user impact
+          ⏱️ Duration: ~3-5 minutes
         required: true
         default: true
         type: boolean
+      
+      # ═══════════════════════════════════════════════════════════════
+      # 📊 PROJECT MANAGEMENT INTEGRATION
+      # ═══════════════════════════════════════════════════════════════
       next_release_jira_release_version:
-        description: 'Update JIRA with the next release version information'
+        description: |
+          📊 **Update JIRA Release**
+          Updates JIRA project with new release version and closes sprint.
+          ✅ Includes: version update, sprint closure, ticket transitions
+          ⏱️ Duration: ~2 minutes
         required: true
         default: true
         type: boolean
+      
       next_release_app_version:
-        description: 'Bump application version for the next release cycle'
+        description: |
+          🔢 **Bump App Version**
+          Increments version in package.json/pom.xml for next development cycle.
+          ✅ Prepares: next sprint, development branch versioning
+          ⏱️ Duration: ~1 minute
         required: true
         default: true
         type: boolean
+      
+      # ═══════════════════════════════════════════════════════════════
+      # 🚨 PRODUCTION DEPLOYMENT - LIVE IMPACT
+      # ═══════════════════════════════════════════════════════════════
       forward_merge_from_staging_to_production:
-        description: 'Merge changes from staging branch to production branch'
+        description: |
+          🚀 **DEPLOY TO PRODUCTION** (staging → production)
+          ⚠️  CRITICAL: This deploys to LIVE production environment!
+          ✅ Affects: real users, live system, production database
+          ⏱️ Duration: ~5-10 minutes | 🔔 Notifications: Slack, email
         required: true
         default: true
         type: boolean
