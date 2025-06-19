@@ -95,6 +95,19 @@ on:
         required: true
         default: true
         type: boolean
+
+      branch_master:
+        required: true
+        default: "master"
+        type: string
+      branch_stsaging:
+        required: true
+        default: "staging"
+        type: string
+      branch_production:
+        required: true
+        default: "production"
+        type: string
         
 
 # Set environment variables that can be used across all jobs  
