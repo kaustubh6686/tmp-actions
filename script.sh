@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # check if env is set
-if [ -z "$BRANCH_MASTER" ]; then
+if [ -z "$BRANCH_MASTER" ] || [ "$BRANCH_MASTER" == "" ]; then
     $BRANCH_MASTER = "master"
 fi
 
-if [ -z "$BRANCH_STAGING" ]; then
+if [ -z "$BRANCH_STAGING" ] || [ "$BRANCH_STAGING" == "" ]; then
     $BRANCH_STAGING = "staging"
 fi
 
-if [ -z "$BRANCH_PRODUCTION" ]; then
+if [ -z "$BRANCH_PRODUCTION" ] || [ "$BRANCH_PRODUCTION" == "" ]; then
     $BRANCH_PRODUCTION = "production"
 fi
 
-if [ -z "$TEST_TAG" ]; then
+if [ -z "$TEST_TAG" ] || [ "$TEST_TAG" == "" ]; then
     $TEST_TAG = "5.219.0"
 fi
 
