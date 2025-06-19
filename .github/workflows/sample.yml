@@ -105,10 +105,6 @@ on:
         required: true
         default: "staging"
         type: string
-      branch_production:
-        required: true
-        default: "production"
-        type: string
       test_tag:
         required: false
         type: string
