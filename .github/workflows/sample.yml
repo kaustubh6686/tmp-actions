@@ -100,7 +100,7 @@ on:
         required: true
         default: "master"
         type: string
-      branch_stsaging:
+      branch_staging:
         required: true
         default: "staging"
         type: string
