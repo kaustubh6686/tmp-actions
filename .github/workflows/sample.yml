@@ -4,30 +4,37 @@ on:
   workflow_dispatch:
     inputs:
       back_merge:
+        description: 'Perform back merge operation from main to develop branch'
         required: true
         default: true
         type: boolean
       create_tag:
+        description: 'Create a new release tag based on version'
         required: true
         default: true
         type: boolean
       add_changelog:
+        description: 'Generate and add changelog entries for the release'
         required: true
         default: true
         type: boolean
       forward_merge_from_develop_to_staging:
+        description: 'Merge changes from develop branch to staging branch'
         required: true
         default: true
         type: boolean
       next_release_jira_release_version:
+        description: 'Update JIRA with the next release version information'
         required: true
         default: true
         type: boolean
       next_release_app_version:
+        description: 'Bump application version for the next release cycle'
         required: true
         default: true
         type: boolean
       forward_merge_from_staging_to_production:
+        description: 'Merge changes from staging branch to production branch'
         required: true
         default: true
         type: boolean
