@@ -1,4 +1,5 @@
 name: 🚀 Release Pipeline - Complete Deployment Workflow
+run-name: Release
 
 # 📋 WORKFLOW OVERVIEW:
 # This automated pipeline handles end-to-end release management with the following stages:
