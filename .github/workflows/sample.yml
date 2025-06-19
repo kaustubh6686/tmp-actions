@@ -108,7 +108,9 @@ on:
         required: true
         default: "production"
         type: string
-        
+      test_tag:
+        required: false
+        type: string
 
 # Set environment variables that can be used across all jobs  
 env:
@@ -117,6 +119,7 @@ env:
   BRANCH_MASTER: ${{ inputs.branch_master }}
   BRANCH_STAGING: ${{ inputs.branch_staging }}
   BRANCH_PRODUCTION: ${{ inputs.branch_production }}
+  TEST_TAG: ${{ inputs.test_tag }}
 
 jobs:
 
