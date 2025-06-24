@@ -134,7 +134,9 @@ jobs:
         exit 1
 
   create_tag:
-    if: inputs.create_tag == true && always() && (needs.back_merge.result == 'success' || inputs.back_merge == false)
+    if: >
+      inputs.create_tag == true && always() && 
+      (needs.back_merge.result == 'success' || inputs.back_merge == false)
     needs: back_merge
     name: create_tag
     runs-on: ubuntu-latest  
@@ -145,7 +147,10 @@ jobs:
         echo "Create Tag"
 
   add_changelog:
-    if: inputs.add_changelog == true && always() && (needs.create_tag.result == 'success' || inputs.create_tag == false)
+    if: >
+      inputs.add_changelog == true && always() && 
+      (needs.create_tag.result == 'success' || inputs.create_tag == false) &&
+      (needs.back_merge.result == 'success' || inputs.back_merge == false)
     needs: [back_merge, create_tag]
     name: add_changelog
     runs-on: ubuntu-latest
@@ -156,7 +161,11 @@ jobs:
         echo "Add Changelog"
 
   forward_merge_from_develop_to_staging:
-    if: inputs.forward_merge_from_develop_to_staging == true && always() && (needs.add_changelog.result == 'success' || inputs.add_changelog == false)
+    if: >
+      inputs.forward_merge_from_develop_to_staging == true && always() && 
+      (needs.add_changelog.result == 'success' || inputs.add_changelog == false) &&
+      (needs.back_merge.result == 'success' || inputs.back_merge == false) &&
+      (needs.create_tag.result == 'success' || inputs.create_tag == false)
     needs: [back_merge, create_tag, add_changelog]
     name: forward_merge_from_develop_to_staging
     runs-on: ubuntu-latest
@@ -167,7 +176,12 @@ jobs:
         echo "Forward Merge from Develop to Staging"
 
   next_release_jira_release_version:
-    if: inputs.next_release_jira_release_version == true && always() && (needs.forward_merge_from_develop_to_staging.result == 'success' || inputs.forward_merge_from_develop_to_staging == false)
+    if: >
+      inputs.next_release_jira_release_version == true && always() && 
+      (needs.forward_merge_from_develop_to_staging.result == 'success' || inputs.forward_merge_from_develop_to_staging == false) &&
+      (needs.add_changelog.result == 'success' || inputs.add_changelog == false) &&
+      (needs.back_merge.result == 'success' || inputs.back_merge == false) &&
+      (needs.create_tag.result == 'success' || inputs.create_tag == false)
     needs: [back_merge, create_tag, add_changelog, forward_merge_from_develop_to_staging]
     name: next_release_jira_release_version
     runs-on: ubuntu-latest
@@ -178,7 +192,13 @@ jobs:
         echo "Next Release Jira Release Version"
 
   next_release_app_version:
-    if: inputs.next_release_app_version == true && always() && (needs.next_release_jira_release_version.result == 'success' || inputs.next_release_jira_release_version == false)
+    if: >
+      inputs.next_release_app_version == true && always() && 
+      (needs.next_release_jira_release_version.result == 'success' || inputs.next_release_jira_release_version == false) &&
+      (needs.add_changelog.result == 'success' || inputs.add_changelog == false) &&
+      (needs.back_merge.result == 'success' || inputs.back_merge == false) &&
+      (needs.create_tag.result == 'success' || inputs.create_tag == false) &&
+      (needs.forward_merge_from_develop_to_staging.result == 'success' || inputs.forward_merge_from_develop_to_staging == false)
     needs: [back_merge, create_tag, add_changelog, forward_merge_from_develop_to_staging, next_release_jira_release_version]
     name: next_release_app_version
     runs-on: ubuntu-latest
@@ -189,7 +209,14 @@ jobs:
         echo "Next Release App Version"
       
   forward_merge_from_staging_to_production:
-    if: inputs.forward_merge_from_staging_to_production == true && always() && (needs.next_release_app_version.result == 'success' || inputs.next_release_app_version == false)
+    if: >
+      inputs.forward_merge_from_staging_to_production == true && always() && 
+      (needs.next_release_app_version.result == 'success' || inputs.next_release_app_version == false) &&
+      (needs.add_changelog.result == 'success' || inputs.add_changelog == false) &&
+      (needs.back_merge.result == 'success' || inputs.back_merge == false) &&
+      (needs.create_tag.result == 'success' || inputs.create_tag == false) &&
+      (needs.forward_merge_from_develop_to_staging.result == 'success' || inputs.forward_merge_from_develop_to_staging == false) &&
+      (needs.next_release_jira_release_version.result == 'success' || inputs.next_release_jira_release_version == false)
     needs: [back_merge, create_tag, add_changelog, forward_merge_from_develop_to_staging, next_release_jira_release_version, next_release_app_version]
     name: forward_merge_from_staging_to_production
     runs-on: ubuntu-latest
