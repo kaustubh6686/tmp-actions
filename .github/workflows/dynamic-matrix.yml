@@ -22,7 +22,7 @@ jobs:
           pwd
           echo 'LS'
           ls
-          ./generate_matrix.py
+          ./generate-matrix.py
 
   use_generated_matrix:
     name: ${{ matrix.env }}
