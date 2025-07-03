@@ -73,3 +73,5 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
       cancel-in-progress: false
+    steps:
+    - run: echo "Running for env=${{ matrix.env }} in region=${{ matrix.region }} deployment=${{ matrix.deployment }}"
