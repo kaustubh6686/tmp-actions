@@ -16,6 +16,7 @@ on:
       # 🔧 REPOSITORY MANAGEMENT
       # ═══════════════════════════════════════════════════════════════
       back_merge:
+        name: Back Merge
         description: |
           🔄 **Back Merge** (main → develop)
           Synchronizes main branch changes back to develop branch.
@@ -29,6 +30,7 @@ on:
       # 🏷️ VERSION CONTROL & DOCUMENTATION
       # ═══════════════════════════════════════════════════════════════
       create_tag:
+        name: Create Tag
         description: |
           🏷️ **Create Release Tag**
           Generates semantic version tag (vX.X.X) and creates GitHub release.
@@ -39,6 +41,7 @@ on:
         type: boolean
       
       add_changelog:
+        name: Add Changelog
         description: |
           📝 **Generate Changelog**
           Auto-creates CHANGELOG.md with commit history and release notes.
@@ -52,6 +55,7 @@ on:
       # 🌐 ENVIRONMENT PROMOTION
       # ═══════════════════════════════════════════════════════════════
       forward_merge_from_develop_to_staging:
+        name: Forward Merge from Develop to Staging
         description: |
           ➡️ **Deploy to Staging** (develop → staging)
           Promotes latest features to staging environment for QA testing.
@@ -65,6 +69,7 @@ on:
       # 📊 PROJECT MANAGEMENT INTEGRATION
       # ═══════════════════════════════════════════════════════════════
       next_release_jira_release_version:
+        name: Next Release Jira Release Version
         description: |
           📊 **Update JIRA Release**
           Updates JIRA project with new release version and closes sprint.
@@ -75,6 +80,7 @@ on:
         type: boolean
       
       next_release_app_version:
+        name: Next Release App Version
         description: |
           🔢 **Bump App Version**
           Increments version in package.json/pom.xml for next development cycle.
@@ -88,6 +94,7 @@ on:
       # 🚨 PRODUCTION DEPLOYMENT - LIVE IMPACT
       # ═══════════════════════════════════════════════════════════════
       forward_merge_from_staging_to_production:
+        name: Forward Merge from Staging to Production
         description: |
           🚀 **DEPLOY TO PRODUCTION** (staging → production)
           ⚠️  CRITICAL: This deploys to LIVE production environment!
@@ -98,14 +105,32 @@ on:
         type: boolean
 
       branch_master:
+        name: Branch Master
+        description: |
+          🌐 **Branch Master**
+          Branches the master branch.
+          ✅ Includes: master branch
+          ⏱️ Duration: ~1 minute
         required: true
         default: "master"
         type: string
       branch_staging:
+        name: Branch Staging
+        description: |
+          🌐 **Branch Staging**
+          Branches the staging branch.
+          ✅ Includes: staging branch
+          ⏱️ Duration: ~1 minute
         required: true
         default: "staging"
         type: string
       test_tag:
+        name: Test Tag
+        description: |
+          🌐 **Test Tag**
+          Tags the test branch.
+          ✅ Includes: test branch
+          ⏱️ Duration: ~1 minute
         required: false
         type: string
 
