@@ -79,18 +79,15 @@ def generate_matrix():
     environments = {}
 
     for env in ['dev', 'stg', 'uat', 'prd']:
-        environments[env] = {'include': []}
+        environments[env] = []
 
         if env == 'uat':
             continue
 
         for region in ['us-east-2', 'us-west-2']:
             for deployment in deployments:
-                environments[env]['include'].append({'env': env, 'region': region, 'deployment': deployment})
+                environments[env].append({'env': env, 'region': region, 'deployment': deployment})
     
-    matrix = environments
-    json_obj = json.dumps(matrix)
-
     # Create separate matrix for each environment
     github_output_file = os.getenv("GITHUB_OUTPUT")
     if github_output_file:
