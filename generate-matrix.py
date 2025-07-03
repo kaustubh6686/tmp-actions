@@ -88,7 +88,7 @@ def generate_matrix():
             for deployment in deployments:
                 environments[env]['include'].append({'env': env, 'region': region, 'deployment': deployment})
     
-    matrix = {'include': environments}
+    matrix = environments
     json_obj = json.dumps(matrix)
 
     github_output_file = os.getenv("GITHUB_OUTPUT")
