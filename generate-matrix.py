@@ -79,14 +79,14 @@ def generate_matrix():
     environments = {}
 
     for env in ['dev', 'stg', 'uat', 'prd']:
-        environments[env] = []
+        environments[env] = {'include': []}
 
         if env == 'uat':
             continue
 
         for region in ['us-east-2', 'us-west-2']:
             for deployment in deployments:
-                environments[env].append({'env': env, 'region': region, 'deployment': deployment})
+                environments[env]['include'].append({'env': env, 'region': region, 'deployment': deployment})
     
     matrix = {'include': environments}
     json_obj = json.dumps(matrix)
