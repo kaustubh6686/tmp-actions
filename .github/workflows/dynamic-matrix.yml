@@ -10,7 +10,10 @@ jobs:
     name: Generate Matrix
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.generate_matrix.outputs.matrix }}
+      matrix_dev: ${{ steps.generate_matrix.outputs.matrix_dev }}
+      matrix_stg: ${{ steps.generate_matrix.outputs.matrix_stg }}
+      matrix_uat: ${{ steps.generate_matrix.outputs.matrix_uat }}
+      matrix_prd: ${{ steps.generate_matrix.outputs.matrix_prd }}
 
     steps:
       - uses: actions/checkout@v4
