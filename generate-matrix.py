@@ -91,12 +91,19 @@ def generate_matrix():
     matrix = environments
     json_obj = json.dumps(matrix)
 
+    # Create separate matrix for each environment
     github_output_file = os.getenv("GITHUB_OUTPUT")
     if github_output_file:
         with open(github_output_file, "a") as f:
-            print(f'matrix={json_obj}', file=f)
+            for env, matrix_data in environments.items():
+                matrix = {'include': matrix_data}
+                json_obj = json.dumps(matrix)
+                print(f'matrix_{env}={json_obj}', file=f)
     else:
-        print(json_obj)
+        for env, matrix_data in environments.items():
+            matrix = {'include': matrix_data}
+            json_obj = json.dumps(matrix)
+            print(f'{env}: {json_obj}')
 
 if __name__ == "__main__":
     generate_matrix() 

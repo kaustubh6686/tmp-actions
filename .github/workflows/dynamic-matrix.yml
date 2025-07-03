@@ -30,7 +30,7 @@ jobs:
     needs: generate_matrix
     strategy:
       fail-fast: true
-      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.dev) }}
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix_dev) }}
     concurrency:
       group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
       cancel-in-progress: false
@@ -43,7 +43,7 @@ jobs:
     needs: generate_matrix
     strategy:
       fail-fast: true
-      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.stg) }}
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix_stg) }}
     concurrency:
       group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
       cancel-in-progress: false
@@ -56,7 +56,7 @@ jobs:
     needs: generate_matrix
     strategy:
       fail-fast: true
-      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.uat) }}
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix_uat) }}
     concurrency:
       group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
       cancel-in-progress: false
@@ -69,7 +69,7 @@ jobs:
     needs: generate_matrix
     strategy:
       fail-fast: true
-      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.prd) }}
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix_prd) }}
     concurrency:
       group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
       cancel-in-progress: false
