@@ -7,10 +7,10 @@ import json
 deployments = [
     'airbyte--connectors',
     'airbyte--connectors-postgres',
-    'airbyte--iam--kinesis-user',
-    'airbyte--rds',
-    'airbyte--rds-users',
-    'airbyte--s3--logs',
+    # 'airbyte--iam--kinesis-user',
+    # 'airbyte--rds',
+    # 'airbyte--rds-users',
+    # 'airbyte--s3--logs',
     # 'bastion-server',
     # 'bde--client-export-cloudfront',
     # 'bi--iam--etl-datalake',
@@ -76,12 +76,17 @@ def generate_matrix():
     for example, using boto3 to query AWS for a list of environments to test against.
     """
     # For now, a static list.
-    environments = []
+    environments = {}
 
-    for env in ['dev', 'stg', 'prd']:
+    for env in ['dev', 'stg', 'uat', 'prd']:
+        environments[env] = []
+
+        if env == 'uat':
+            continue
+
         for region in ['us-east-2', 'us-west-2']:
             for deployment in deployments:
-                environments.append({'env': env, 'region': region, 'deployment': deployment})
+                environments[env].append({'env': env, 'region': region, 'deployment': deployment})
     
     matrix = {'include': environments}
     json_obj = json.dumps(matrix)

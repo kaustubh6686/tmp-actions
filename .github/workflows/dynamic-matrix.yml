@@ -24,15 +24,52 @@ jobs:
           ls
           ./generate-matrix.py
 
-  use_generated_matrix:
-    name: ${{ matrix.env }} (${{ matrix.deployment }}) (${{ matrix.region }})
+  terraform_dev:
+    name: ${{ matrix.env }} (${{ matrix.deployment }})
     runs-on: ubuntu-latest
     needs: generate_matrix
     strategy:
-      fail-fast: false
-      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
+      fail-fast: true
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.dev) }}
     concurrency:
       group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
       cancel-in-progress: false
     steps:
     - run: echo "Running for env=${{ matrix.env }} in region=${{ matrix.region }} deployment=${{ matrix.deployment }}"
+
+  terraform_stg:
+    name: ${{ matrix.env }} (${{ matrix.deployment }})
+    runs-on: ubuntu-latest
+    needs: generate_matrix
+    strategy:
+      fail-fast: true
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.stg) }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
+      cancel-in-progress: false
+    steps:
+    - run: echo "Running for env=${{ matrix.env }} in region=${{ matrix.region }} deployment=${{ matrix.deployment }}"
+
+  terraform_uat:
+    name: ${{ matrix.env }} (${{ matrix.deployment }})
+    runs-on: ubuntu-latest
+    needs: generate_matrix
+    strategy:
+      fail-fast: true
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.uat) }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
+      cancel-in-progress: false
+    steps:
+    - run: echo "Running for env=${{ matrix.env }} in region=${{ matrix.region }} deployment=${{ matrix.deployment }}"
+
+  terraform_prd:
+    name: ${{ matrix.env }} (${{ matrix.deployment }})
+    runs-on: ubuntu-latest
+    needs: generate_matrix
+    strategy:
+      fail-fast: true
+      matrix:  ${{ fromJson(needs.generate_matrix.outputs.matrix.prd) }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.deployment }}-${{ matrix.env }}-${{ matrix.region }}
+      cancel-in-progress: false
